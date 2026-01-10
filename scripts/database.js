@@ -2,7 +2,7 @@
 import { MongoClient } from "mongodb";
 
 const MONGO_URI = process.env.MONGO_URI;
-const DB_NAME = "pernalongaBot";
+const DB_NAME = "assistenteFinanceiro";
 
 let cachedClient = null;
 let cachedDb = null;
@@ -22,3 +22,4 @@ export async function connectPernalongaBot() {
   cachedDb = cachedClient.db(DB_NAME);
   return cachedDb;
 }
+

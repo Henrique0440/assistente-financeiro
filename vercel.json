@@ -1,0 +1,23 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "api/gastos.js",
+            "use": "@vercel/node"
+        },
+        {
+            "src": "api/categorias.js",
+            "use": "@vercel/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/gastos",
+            "dest": "api/gastos.js"
+        },
+        {
+            "src": "/api/categorias",
+            "dest": "api/categorias.js"
+        }
+    ]
+}

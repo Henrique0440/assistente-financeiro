@@ -28,36 +28,6 @@ export default async function handler(req, res) {
 
     return res.status(200).json(data);
   }
-
-  // 🔹 CRIAR GASTO (opcional, se quiser usar API pra salvar)
-  if (req.method === "POST") {
-    const {
-      userId,
-      username,
-      categoria,
-      valor,
-      descricao,
-      origem,
-      hash
-    } = req.body;
-
-    if (!userId || !categoria || !valor) {
-      return res.status(400).json({ error: "Campos obrigatórios ausentes" });
-    }
-
-    await gastos.insertOne({
-      userId,
-      username: username || "Desconhecido",
-      categoria,
-      valor,
-      descricao,
-      origem,
-      hash,
-      createdAt: new Date()
-    });
-
-    return res.status(201).json({ success: true });
-  }
-
+  
   return res.status(405).json({ error: "Método não permitido" });
 }

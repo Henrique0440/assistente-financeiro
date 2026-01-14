@@ -13,7 +13,7 @@
         "mongodb": "^6.10.0"
     },
     "engines": {
-        "node": "20.x"
+        "node": "20.8.0"
     },
     "keywords": [
         "whatsapp",
@@ -24,4 +24,5 @@
     ],
     "author": "Henrique0440",
     "license": "MIT"
+
 }

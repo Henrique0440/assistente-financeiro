@@ -1,4 +1,4 @@
-import { connectDB } from "../scripts/database.js";
+import { connectPernalongaBot } from "../scripts/database.js";
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const db = await connectDB();
+    const db = await connectPernalongaBot();
     const usuarios = db.collection("usuarios"); // Coleção para salvar usuários/planos
 
     const data = req.body;
@@ -59,3 +59,4 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Erro ao salvar usuário" });
   }
 }
+

@@ -4,7 +4,7 @@ import { ObjectId } from "mongodb";
 export default async function handler(req, res) {
     // 🔹 CORS
     res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "GET,POST,DELETE,OPTIONS");
+    res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
     if (req.method === "OPTIONS") return res.status(204).end();
@@ -23,21 +23,38 @@ export default async function handler(req, res) {
 
     // 🔹 CRIAR META
     if (req.method === "POST") {
-        const { userId, titulo, descricao, valor } = req.body;
-
-        if (!userId || !titulo) {
-            return res.status(400).json({ error: "Campos obrigatórios ausentes" });
-        }
+        const { userId, nome, objetivo } = req.body;
+        if (!userId || !nome || objetivo == null) return res.status(400).json({ error: "Campos obrigatórios ausentes" });
 
         const result = await metas.insertOne({
             userId,
-            titulo,
-            descricao: descricao || "",
-            valor: valor || 0,
+            nome,
+            objetivo,
+            saldo: 0,
             createdAt: new Date()
         });
 
         return res.status(201).json({ success: true, id: result.insertedId });
+    }
+
+    // 🔹 EDITAR META
+    if (req.method === "PUT") {
+        const { id, nome, objetivo, saldo } = req.body;
+        if (!id) return res.status(400).json({ error: "ID é obrigatório" });
+
+        const updateFields = {};
+        if (nome) updateFields.nome = nome;
+        if (objetivo != null) updateFields.objetivo = objetivo;
+        if (saldo != null) updateFields.saldo = saldo;
+
+        const result = await metas.updateOne(
+            { _id: new ObjectId(id) },
+            { $set: { ...updateFields, updatedAt: new Date() } }
+        );
+
+        if (result.matchedCount === 0) return res.status(404).json({ error: "Meta não encontrada" });
+
+        return res.status(200).json({ success: true, mensagem: "Meta atualizada" });
     }
 
     // 🔹 DELETAR META

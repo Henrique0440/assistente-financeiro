@@ -35,7 +35,7 @@ export default async function handler(req, res) {
     // Datas
     const agora = new Date();
     const expiraEm = new Date();
-    expiraEm.setMonth(expiraEm.getMonth() + 12); // Exemplo: plano válido por 12 meses
+    expiraEm.setMonth(expiraEm.getMonth() + 1); // Exemplo: plano válido por 1 mes
 
     const usuarioData = {
       userId,
@@ -59,4 +59,5 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Erro ao salvar usuário" });
   }
 }
+
 

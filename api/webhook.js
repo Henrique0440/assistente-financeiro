@@ -1,4 +1,4 @@
-import { connectDB } from "../scripts/database.js";
+import { connectPernalongaBot } from "../scripts/database.js";
 
 function normalizarNumeroAntigoBR(input) {
   if (!input) return null;
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Método não permitido" });
 
   try {
-    const db = await connectDB();
+    const db = await connectPernalongaBot();
     const usuarios = db.collection("usuarios");
     const data = req.body;
 

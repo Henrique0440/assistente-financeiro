@@ -4,6 +4,7 @@ function normalizarNumeroAntigoBR(input) {
   if (!input) return null;
 
   let numero = input.replace(/\D/g, '');
+
   if (numero.startsWith('00')) numero = numero.slice(2);
   if (numero.startsWith('55')) numero = numero.slice(2);
 
@@ -12,7 +13,11 @@ function normalizarNumeroAntigoBR(input) {
   const ddd = numero.slice(0, 2);
   let telefone = numero.slice(2);
 
-  if (telefone.length === 9) telefone = telefone.slice(1);
+  // celular novo → converte para formato antigo
+  if (telefone.length === 9 && telefone.startsWith('9')) {
+    telefone = telefone.slice(1);
+  }
+
   if (telefone.length !== 8) return null;
 
   return `55${ddd}${telefone}`;
@@ -27,19 +32,23 @@ export default async function handler(req, res) {
     const data = req.body;
 
     // Normaliza número do cliente
-    const telefoneNormalizado = normalizarNumeroAntigoBR(data.Customer?.mobile);
+    const telefoneNormalizado = normalizarNumeroAntigoBR("+55 (61) 999714472");
     if (!telefoneNormalizado) return res.status(400).json({ error: "Número inválido" });
 
     const userId = `${telefoneNormalizado}@s.whatsapp.net`;
     const agora = new Date();
     const expiraEm = new Date();
     expiraEm.setDate(expiraEm.getDate() + 30); // Expira em 30 dias
+    const plano = typeof data.Product?.product_name === 'string' ? data.Product.product_name.toLowerCase() : 'premium';
+    const tipoEvento = data.webhook_event_type;
 
     const usuarioData = {
       userId,
       ativo: true,
-      plano: data.Product?.product_name.toLowerCase() || "premium",
+      plano: "premium",
       expiraEm,
+      mensagemenviada: false,
+      tipoEvento,
       updatedAt: agora
     };
 

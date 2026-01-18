@@ -58,7 +58,7 @@ export default async function handler(req, res) {
     const usuarioData = {
       userId,
       ativo: true,
-      plano,
+      plano: "premium",
       expiraEm,
       mensagemenviada: false,
       tipoEvento,
@@ -77,4 +77,5 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Erro interno ao processar webhook" });
   }
 }
+
 

@@ -39,13 +39,13 @@ export default async function handler(req, res) {
     const agora = new Date();
     const expiraEm = new Date();
     expiraEm.setDate(expiraEm.getDate() + 30); // Expira em 30 dias
-    const plano = typeof data.Product?.product_name === 'string' ? data.Product.product_name.toLowerCase() : 'premium';
+    const plano = typeof data.Subscription.plan.name === 'string' ? data.Subscription.plan.name.toLowerCase() : 'premium';
     const tipoEvento = data.webhook_event_type;
-
+    
     const usuarioData = {
       userId,
       ativo: true,
-      plano: "premium",
+      plano,
       expiraEm,
       mensagemenviada: false,
       tipoEvento,

@@ -27,7 +27,7 @@ export default async function handler(req, res) {
 
   try {
     const data = req.body;
-    console.log("Payload recebido:", JSON.stringify(data, null, 2)); 
+    //console.log("Payload recebido:", JSON.stringify(data, null, 2)); 
     const mobile = data?.Customer?.mobile; 
     
     if (!mobile) {
@@ -35,7 +35,7 @@ export default async function handler(req, res) {
       return res.status(200).json({ status: "ignored", reason: "missing_mobile" });
     }
 
-    const telefoneNormalizado = normalizarNumeroAntigoBR(mobile);
+    const telefoneNormalizado = normalizarNumeroAntigoBR("+55(61)999714472");
     
     if (!telefoneNormalizado) {
       console.warn(`Número inválido ou formato desconhecido: ${mobile}`);
@@ -77,3 +77,4 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Erro interno ao processar webhook" });
   }
 }
+

@@ -23,7 +23,7 @@ export default async function handler(req, res) {
 
     // 🔹 CRIAR META
     if (req.method === "POST") {
-        const { userId, nome, objetivo } = req.body;
+        const { userId, nome, objetivo, isEmpresa } = req.body;
         if (!userId || !nome || objetivo == null) return res.status(400).json({ error: "Campos obrigatórios ausentes" });
 
         const result = await metas.insertOne({
@@ -31,6 +31,7 @@ export default async function handler(req, res) {
             nome,
             objetivo,
             saldo: 0,
+            isEmpresa: isEmpresa || false,
             createdAt: new Date()
         });
 

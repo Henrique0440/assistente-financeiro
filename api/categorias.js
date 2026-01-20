@@ -23,7 +23,7 @@ export default async function handler(req, res) {
 
     // 🔹 CRIAR CATEGORIA
     if (req.method === "POST") {
-        const { userId, username, nome, palavras } = req.body;
+        const { userId, username, nome, palavras, isEmpresa } = req.body;
         if (!userId || !nome) return res.status(400).json({ error: "Campos obrigatórios ausentes" });
 
         const result = await categorias.insertOne({
@@ -31,6 +31,7 @@ export default async function handler(req, res) {
             username: username || "Desconhecido",
             nome: nome.toLowerCase(),
             palavras: palavras || [],
+            isEmpresa: isEmpresa || false,
             createdAt: new Date()
         });
 

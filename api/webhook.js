@@ -31,8 +31,9 @@ export default async function handler(req, res) {
     const usuarios = db.collection("usuarios");
     const data = req.body;
 
-    // Normaliza número do cliente
-    const telefoneNormalizado = normalizarNumeroAntigoBR("+55 (61) 999714472");
+    // Normaliza número do client
+    const numeroCliente = data?.Customer?.mobile;
+    const telefoneNormalizado = normalizarNumeroAntigoBR(numeroCliente);
     if (!telefoneNormalizado) return res.status(400).json({ error: "Número inválido" });
 
     const userId = `${telefoneNormalizado}@s.whatsapp.net`;

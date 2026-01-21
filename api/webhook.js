@@ -32,7 +32,8 @@ export default async function handler(req, res) {
     const data = req.body;
 
     // Normaliza número do client
-    const numeroCliente = data?.Customer?.mobile;
+    //const numeroCliente = data?.Customer?.mobile;
+    const numeroCliente = "556199714472"
     const telefoneNormalizado = normalizarNumeroAntigoBR(numeroCliente);
     if (!telefoneNormalizado) return res.status(400).json({ error: "Número inválido" });
 
@@ -62,3 +63,4 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Erro ao salvar usuário" });
   }
 }
+
